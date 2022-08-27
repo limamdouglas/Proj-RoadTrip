@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Proj_RoadTrip.API.Data;
 using Proj_RoadTrip.API.Models;
 using System;
 using System.Collections.Generic;
@@ -12,25 +13,17 @@ namespace Proj_RoadTrip.API.Controllers
     [Route("api/[controller]")]
     public class ClienteController : ControllerBase
     {
-        public ClienteController()
+        private readonly DataContext context;
+
+        public ClienteController(DataContext _context)
         {
+            context = _context;
         }
 
         [HttpGet]
-        public Cliente Get()
+        public IEnumerable<Cliente> Get()
         {
-            return new Cliente()
-            {
-                ClienteId = 1,
-                Nome = "Douglas",
-                DtNascimento = "20/03/1991",
-                CPF = "11.625.027-83",
-                EstadoCivil = "Solteiro",
-                Email = "lima.mdouglas@gmail.com",
-                TelefoneEmergencia = "(21)98765-4321",
-                ResponsavelEmergencia = "Mãe",
-                Instagram = "teste"
-            };
+            return context.Clientes;
         }
     }
 }
